@@ -1,0 +1,22 @@
+server {
+	listen		80;
+	server_name	example.com;
+
+	root		/var/www/example.com/www;
+
+	access_log	/var/www/example.com/access.log	main;
+	error_log	/var/www/example.com/error.log	warn;
+
+	location / {
+		try_files	$uri $uri/ =404;
+	}
+
+	## Passing request to node.js socket
+	#location / {
+	#	proxy_pass	http://unix:/var/www/example.com/node/listen.sock:$uri$is_args$args;
+	#	include		bp/enable/nodejs.conf;
+	#}
+
+	include	bp/locations/system.conf;
+	include	bp/locations/static.conf;
+}
